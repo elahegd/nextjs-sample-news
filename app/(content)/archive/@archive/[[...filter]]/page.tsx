@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { NewsList } from "@/components/NewsList/news-list";
 import Link from "next/link";
 import { getNewsForYear, getAvailableNewsYears } from "@/lib/action";
@@ -8,19 +9,14 @@ import classes from "./page.module.css";
 interface ParamsProps {
     params: { filter: string[] }
 }
-
-export default async function FilteredNewsPage({ params }: ParamsProps) {
-    const { filter } = await params;
-    const selectedYear = filter?.[0];
-    const selectedMonth = filter?.[1];
-
-    const newsList:NewsItem[] = await getNewsList();
+interface FilteredNewsByYearProps {
+    year: string,
+    newsList: NewsItem[]
+}
+function FilteredNewByYear({ year, newsList }: FilteredNewsByYearProps) {
     let news: NewsItem[];
-
-    const years = getAvailableNewsYears(newsList);
-
-    if (selectedYear && !selectedMonth) {
-        news = getNewsForYear(newsList, selectedYear);
+    if (year) {
+        news = getNewsForYear(newsList, year);
     }
 
     let newsContent = <p> No content </p>;
@@ -28,11 +24,14 @@ export default async function FilteredNewsPage({ params }: ParamsProps) {
     if (news && news.length > 0) {
         newsContent = <NewsList news={news} />
     }
+    return newsContent;
+}
 
-    if (selectedYear && !years.includes(+selectedYear)) {
-        throw new Error('Invalid path:');
-    }    
-
+export default async function FilteredNewsPage({ params }: ParamsProps) {
+    const { filter } = await params;
+    const selectedYear = filter?.[0];
+    const newsList: NewsItem[] = await getNewsList();
+    const years = getAvailableNewsYears(newsList);
 
     return (
         <>
@@ -43,8 +42,9 @@ export default async function FilteredNewsPage({ params }: ParamsProps) {
                     ))}
                 </ul>
             </header>
-            {newsContent}
-            
+            <Suspense fallback={<p className="text-center">Loading...</p>}>
+                 <FilteredNewByYear year={selectedYear} newsList={newsList} />
+            </Suspense>
         </>
     )
 }
