@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import ModalBackDrop from "@/components/Modal/backdrop";
-import { getNews } from "@/lib/news";
+import { getNewsItem } from "@/lib/news";
 import { NewsItem } from "@/types/news";
 import classes from "./page.module.css";
 
@@ -12,7 +12,7 @@ interface DetailNewsPageProps {
 export default async function InterceptedImagePage({ params }: DetailNewsPageProps) {
     const { slug } = await params;
 
-    const news: NewsItem = getNews(slug);
+    const news: NewsItem = getNewsItem(slug);
 
     if (!news) {
         notFound();

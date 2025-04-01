@@ -7,6 +7,6 @@ export function getNewsList() {
     return db.prepare('SELECT * FROM news').all(); 
 }
 
-export function getNews(slug: string) {
+export function getNewsItem(slug: string) {
     return db.prepare('SELECT * FROM news WHERE slug = ?').get(slug);
 }

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getNews } from "@/lib/news";
+import { getNewsItem } from "@/lib/news";
 import { NewsItem } from "@/types/news";
 import classes from "./page.module.css";
 
@@ -11,7 +11,7 @@ interface DetailNewsPageProps {
 export default async function DetailNewsPage({ params }: DetailNewsPageProps) {
     const { slug } = await params;
 
-    const news: NewsItem = getNews(slug);
+    const news: NewsItem = getNewsItem(slug);
 
     if (!news) {
         notFound();
