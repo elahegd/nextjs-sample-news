@@ -1,11 +1,12 @@
-import logo from '@/assets/logo.jpg'
+import Image from "next/image";
+import logo from '@/assets/logo.jpg';
 import Link from 'next/link';
 import classes from "./page.module.css";
 
 export default function HomePage() {
   return (
     <div className={classes.home}>
-      <img src={logo.src} alt="A newspaper" />
+      <Image src={logo.src} alt="A newspaper" width={128} height={128} />
       <h1>A News Site For The Next Generation</h1>
       <p>
         Next News is here to deliver you all the latest news - concise &
@@ -28,6 +29,7 @@ export default function HomePage() {
 
       <p>
         <Link href="/news">Read the latest news</Link>
+        <Link href="/add">Add news</Link>
       </p>
     </div>
   );

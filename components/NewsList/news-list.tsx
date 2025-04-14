@@ -14,7 +14,7 @@ export function NewsList({ news }: NewsListProps) {
             {news.map((newsItem: NewsItem) => (
                 <li key={newsItem.id}>
                     <Link href={`/news/${newsItem.slug}`}>
-                        <Image src={`/news/${newsItem.image}`} alt={newsItem.title} width={200} height={200} />
+                        <Image src={newsItem.image} alt={newsItem.title} width={200} height={200} />
                     </Link>
                     <span>{newsItem.title}</span>
                 </li>

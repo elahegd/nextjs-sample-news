@@ -1,22 +1,18 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getNewsItem } from "@/lib/news";
-import { NewsItem } from "@/types/news";
+import { NewsItem, PageParams } from "@/types/news";
 
-interface DetailNewsPageProps {
-    params: { slug?: string };
-}
+export default async function ImagePage({ params }: PageParams) {
+    const pagePramas = await params;
 
-export default async function ImagePage({ params }: DetailNewsPageProps) {
-    const { slug } = await params;
-
-    const news: NewsItem = getNewsItem(slug);
+    const news: NewsItem | null = getNewsItem(pagePramas.slug);
 
     if (!news) {
         notFound();
     }
 
     return(
-        <Image src={`/news/${news.image}`} alt={news.title} width={500} height={500} />
+        <Image src={news.image} alt={news.title} width={500} height={500} />
     )
 }

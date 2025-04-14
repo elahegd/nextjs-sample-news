@@ -4,15 +4,12 @@ import ModalBackDrop from "@/components/Modal/backdrop";
 import { getNewsItem } from "@/lib/news";
 import { NewsItem } from "@/types/news";
 import classes from "./page.module.css";
+import { PageParams } from "@/types/news";
 
-interface DetailNewsPageProps {
-    params: { slug?: string };
-}
+export default async function InterceptedImagePage({ params }: PageParams) {
+    const pagePramas = await params;
 
-export default async function InterceptedImagePage({ params }: DetailNewsPageProps) {
-    const { slug } = await params;
-
-    const news: NewsItem = getNewsItem(slug);
+    const news: NewsItem | null = getNewsItem(pagePramas.slug);
 
     if (!news) {
         notFound();
@@ -23,7 +20,7 @@ export default async function InterceptedImagePage({ params }: DetailNewsPagePro
             <ModalBackDrop />
             <dialog className={classes.modal} open>
                 <div className={classes.fullscreenimage}>
-                    <Image src={`/news/${news.image}`} alt={news.title} width={500} height={500} />
+                    <Image src={news.image} alt={news.title} width={500} height={500} />
                 </div>
             </dialog>
 
