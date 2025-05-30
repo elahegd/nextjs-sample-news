@@ -1,5 +1,8 @@
-.newsarticle img {
-    width: 7rem;
+.newsarticle a.imagecontainer {
+    position: relative;
+    height: 15rem;
+    width: 15rem;
+    display: flex;
     margin-bottom: 1rem;
     border-radius: 4px;
 }

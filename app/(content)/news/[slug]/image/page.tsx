@@ -3,6 +3,13 @@ import Image from "next/image";
 import { getNewsItem } from "@/lib/news";
 import { NewsItem, PageParams } from "@/types/news";
 
+export async function generateMetadata({ params }: PageParams) {
+    const pagePramas = await params;
+    return {
+        title: `${pagePramas.slug}`,
+        description: `Browse ${pagePramas.slug}`
+    }
+}
 export default async function ImagePage({ params }: PageParams) {
     const pagePramas = await params;
 

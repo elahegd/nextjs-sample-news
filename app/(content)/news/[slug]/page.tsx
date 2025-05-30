@@ -6,6 +6,14 @@ import classes from "./page.module.css";
 import { PageParams } from "@/types/news";
 import Image from "next/image";
 
+export async function generateMetadata({ params }: PageParams) {
+    const pagePramas = await params;
+    return {
+        title: `${pagePramas.slug}`,
+        description: `Browse ${pagePramas.slug}`
+    }
+}
+
 export default async function DetailNewsPage({ params }: PageParams) {
     const pagePramas = await params;
     
@@ -18,8 +26,8 @@ export default async function DetailNewsPage({ params }: PageParams) {
     return (
         <article className={classes.newsarticle}>
             <header>
-                <Link href={`/news/${news.slug}/image`}>
-                    <Image  src={news.image} alt={news.title} />
+                <Link href={`/news/${news.slug}/image`} className={classes.imagecontainer}>
+                    <Image src={news.image} alt={news.title} fill />
                 </Link>
                 <h1>{news.title}</h1>
                 <time dateTime={news.date}>{news.date}</time>

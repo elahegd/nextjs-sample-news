@@ -17,10 +17,10 @@
     padding: 0 0 1rem 0;
 }
 
-.newslist a img {
+.newslist a.imagecontainer {
+    position: relative;
     width: 100%;
     height: 14rem;
-    object-fit: cover;
     border-radius: 4px;
 }
 
